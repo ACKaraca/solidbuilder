@@ -5,7 +5,7 @@
 SolidBuilder is a native, open-source parametric modeling application for mechanical design: parts
 built from sketches and features with a robust feature history, surfaces and freeform shapes, sheet
 metal, plastic parts, frames and weldments, assemblies with joints and motion, associative drawings and
-model-based definition, and manufacturing preparation, simulation and electronics co-design. Documents
+model-based definition, and manufacturing preparation, simulation, electronics design and co-design, and exchange with other applications through connectors. Documents
 are local `.solidb` files with a published schema; collaboration through Arc Hub is optional.
 
 ## Who it is for
@@ -46,8 +46,12 @@ automation engineers who build configurable products and code-first part librari
 | Nesting and fabrication | Sheet nesting and cutting | [25](docs/product/capabilities/25-nesting-and-fabrication.md) |
 | Simulation | Studies through open solvers | [26](docs/product/capabilities/26-simulation.md) |
 | Generative design and optimization | Topology optimization and outcomes | [27](docs/product/capabilities/27-generative-design-and-optimization.md) |
-| Electronics co-design | Board exchange with ECAD tools | [28](docs/product/capabilities/28-electronics-codesign.md) |
+| Electronics co-design | Board exchange with open ECAD tools | [28](docs/product/capabilities/28-electronics-codesign.md) |
 | Tolerance and inspection | Stack analysis and inspection | [29](docs/product/capabilities/29-tolerance-and-inspection.md) |
+| Schematic capture | Sheets, symbols, nets, rule checking, variants, netlist | [30](docs/product/capabilities/30-schematic-capture.md) |
+| PCB layout | Stack-up, placement, routing, pours, design rules, 3D board | [31](docs/product/capabilities/31-pcb-layout.md) |
+| Electronics simulation and outputs | SPICE, signal-integrity checks, manufacturing outputs, libraries | [32](docs/product/capabilities/32-electronics-simulation-and-outputs.md) |
+| Application connectors | Native files of other applications through connectors | [33](docs/product/capabilities/33-application-connectors.md) |
 
 ## How it fits in the suite
 

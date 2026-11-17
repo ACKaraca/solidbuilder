@@ -87,7 +87,8 @@ in `arc-suite`; change it there first.
 - Regeneration is deterministic: identical topology and names on one or many threads.
 - Joints and assembly constraints are solved by one solver; results do not depend on creation order.
 - Every feature type defines its canonical text form and round-trips through it.
-- Solvers run as external processes; nothing links a copyleft solver.
+- Third-party solvers and meshers run as external processes; nothing links a copyleft solver. A native
+  kernel replaces a wrapped one only after passing the same validation suites.
 - Imports keep the source file, an import record and a loss report.
 
 ## Documentation rules

@@ -1,6 +1,6 @@
 # Reference workflows
 
-Fourteen end-to-end workflows used as acceptance scenarios for the [roadmap](../roadmap.md). Each step
+Fifteen end-to-end workflows used as acceptance scenarios for the [roadmap](../roadmap.md). Each step
 names the capabilities it exercises; each workflow ends with observable acceptance results.
 
 ## W1 Parametric part from sketch to drawing
@@ -232,3 +232,27 @@ names the capabilities it exercises; each workflow ends with observable acceptan
 - The video and drawing view show the same explosion.
 - Changing an appearance in SolidBuilder updates the interactive render view without re-export
   (SB-VIS-013).
+
+## W15 Board in an enclosure
+
+1. Create a board from the inside of an enclosure part, with mounting holes and a keep-out for a
+   connector opening (SB-PCB-001, SB-PCB-003).
+2. Capture a two-sheet schematic with a hierarchical sheet, a bus and net classes, annotate it and run
+   the rule check (SB-SCH-001, SB-SCH-004, SB-SCH-021, SB-SCH-024, SB-SCH-028, SB-SCH-032).
+3. Simulate an operating point and a transient run of the power stage (SB-EOUT-001, SB-EOUT-005,
+   SB-EOUT-007).
+4. Forward-annotate to the board, place the connector from model coordinates, route a differential
+   pair and tune its length, and pour a ground zone (SB-SCH-051, SB-PCB-020, SB-PCB-026, SB-PCB-028,
+   SB-PCB-037).
+5. Move the enclosure wall and read the real-time clearance violations in layout and model
+   (SB-PCB-056, SB-PCB-058).
+6. Run the board rule check and the signal-integrity checks (SB-PCB-044, SB-EOUT-019, SB-EOUT-020).
+7. Write Gerber, drill, IPC-2581, pick-and-place and the bill of materials for a variant, and release
+   the package (SB-EOUT-026–029, SB-EOUT-033, SB-EOUT-037, SB-EOUT-040).
+
+**Acceptance**
+- After step 5, the violation list matches an independent distance measurement of the same bodies.
+- Changing a symbol value updates the netlist and bill of materials; the board shows a reviewed change
+  set and no connection changes without acceptance (SB-SCH-043, SB-SCH-051).
+- Outputs written in step 7 re-read with an independent reader and match the board (SB-EOUT-032);
+  editing the board afterwards marks them out of date and blocks the release (SB-EOUT-041).

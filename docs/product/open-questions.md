@@ -31,3 +31,8 @@ affected capabilities and what closes it.
 | OQ-24 | What generated content does the standard parts library ship, and under which data licenses can standard dimensions be distributed? | SB-LIB-002, SB-LIB-027 | License review of standards data sources |
 | OQ-25 | What is the canonical text form grammar, and how are plug-in features and freeform bodies represented in it? | SB-AUTO-011, SB-AUTO-012, SB-AUTO-029 | Grammar draft and round-trip tests |
 | OQ-26 | Which subset of commands may an assistant run without per-call confirmation, if any? | SB-AUTO-034–036 | Decision aligned with suite assistance policy |
+| OQ-27 | Which merge granularity for tracks, zones and footprints keeps concurrent board edits predictable? | SB-PCB-024, SB-PCB-037 | Prototype with branch pairs on reference boards |
+| OQ-28 | Which parts of the ODB++ specification are published in a form that permits a clean-room writer and reader? | SB-EOUT-030, SB-EOUT-031 | Specification and license review |
+| OQ-29 | Which open autorouter and SPICE engine are distributed to users given their licenses: user-installed, Hub worker only, or a separate bundle? | SB-PCB-051, SB-EOUT-002 | License review and a decision record |
+| OQ-30 | Which feature types of the other applications' feature trees can a connector read and write through public interfaces, and how are unmapped features carried? | SB-CONNECT-011, SB-CONNECT-012 | Connector prototypes per host and a published support table |
+| OQ-31 | Which MTConnect and OPC UA node models and security profiles must the machine connection support for common controllers? | SB-MFG-073–077 | Review of controller documentation and tests against simulators |

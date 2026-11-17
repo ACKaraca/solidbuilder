@@ -4,7 +4,8 @@ Decisions specific to SolidBuilder. Suite-wide decisions (repository topology, U
 tiers, document model and package, command model, regeneration, units, interoperability, rendering,
 collaboration, extensibility, licensing, assistance, robustness, localization) are recorded in
 [arc-suite/docs/adr](https://github.com/ACKaraca/arc-suite/tree/main/docs/adr) and are not restated
-here.
+here. Exchange connectors are decided in
+[ADR-0017](https://github.com/ACKaraca/arc-suite/blob/main/docs/adr/0017-exchange-connectors-and-licensed-bridges.md).
 
 ## Index
 
@@ -16,6 +17,7 @@ here.
 | [0004](0004-one-assembly-solver.md) | One solver for joints and assembly constraints | Accepted |
 | [0005](0005-canonical-text-form.md) | Stable modeling API and canonical text form of the feature history | Accepted |
 | [0006](0006-external-solvers-and-owned-toolpath-kernels.md) | External open solvers, owned toolpath kernels and a documented post-processor format | Accepted |
+| [0007](0007-electronics-workspace-on-the-suite-document-model.md) | Electronics workspace on the suite document and command model with the shared drafting engine | Accepted |
 
 ## Template
 

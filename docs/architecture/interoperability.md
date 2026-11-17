@@ -20,7 +20,7 @@ relationships), **edit** (native parametric editing).
 | Parasolid XT (text, binary) | Yes | No | data (B-rep) | n/a | bridge from published format reference | 5 |
 | JT (ISO 14306) | Yes | No | view, data where exact geometry present | n/a | bridge | 5 |
 | ACIS SAT | Yes, subject to open question | No | data | n/a | bridge | 5 |
-| Rhino 3DM | Yes | No | data (NURBS) | n/a | bridge process with a permissively licensed reader | 5 |
+| Rhino 3DM | Yes | No | data (NURBS) | n/a | `arc-io-3dm` over a permissively licensed reader | 5 |
 | STL | Yes | Yes | view | view | `arc-io-mesh` | 3 |
 | 3MF | Yes | Yes | view, data (materials, build items) | view, data | `arc-io-mesh` | 3 |
 | OBJ, PLY | Yes | Yes | view | view | `arc-io-mesh` | 3 |
@@ -38,6 +38,14 @@ relationships), **edit** (native parametric editing).
 | CSV, XLSX | Yes (parameters, tables) | Yes (BOM, tables, characteristic lists) | data | data | `solidbuilder-io` | 3 |
 | 3D PDF | No | Yes | n/a | view, data (saved views, annotations) | to be decided | 5 |
 | ECAD exchange (IDX, IDF) | Yes | Yes | data | data | `solidbuilder-io` | see [electronics co-design](../product/capabilities/28-electronics-codesign.md) |
+| Arc exchange package (connectors) | Yes | Yes | data; edit where the host interface exposes it | data; edit where the host interface exposes it | `solidbuilder-io` over the exchange package | see [application connectors](../product/capabilities/33-application-connectors.md) |
+| Gerber X2/X3, drill files | Yes | Yes | data | data | `solidbuilder-ecad` | 5 |
+| IPC-2581 | Yes | Yes | data | data | `solidbuilder-ecad` | 5 |
+| ODB++ (the content its published specification defines) | Yes | Yes | data | data | `solidbuilder-ecad` | 5 |
+| IPC-D-356, pick-and-place CSV | No | Yes | n/a | data | `solidbuilder-ecad` | 5 |
+| SPICE netlists, models and subcircuits | Yes (models) | Yes (netlists) | data | data | `solidbuilder-ecad` | 5 |
+| Open ECAD native schematic, board and library files | Yes | No | data | n/a | `solidbuilder-ecad`, `solidbuilder-io` | 5 |
+| MTConnect, OPC UA (machine status, program transfer) | Yes (status) | Yes (program transfer) | data | data | `solidbuilder-cam` | see [manufacturing setup](../product/capabilities/21-manufacturing-setup-and-tooling.md) |
 | NC programs | No | Yes | n/a | data | `solidbuilder-cam` post-processors | see [manufacturing setup](../product/capabilities/21-manufacturing-setup-and-tooling.md) |
 | Additive build files (3MF build, G-code for printers) | No | Yes | n/a | data | `solidbuilder-cam` | see [additive manufacturing](../product/capabilities/24-additive-manufacturing.md) |
 | Solver decks and results | Yes (results) | Yes (decks) | data | data | `solidbuilder-sim` adapters | see [simulation](../product/capabilities/26-simulation.md) |
@@ -87,14 +95,43 @@ references; the change and any broken references are reported.
   a separate corpus repository with an owner, license and checksum per file.
 - Importers are fuzzed and bound recursion, allocation and entity counts.
 
+## Connectors, bridges and open readers
+
+Native files of other applications that have no published specification are exchanged by connectors,
+as decided in
+[suite ADR-0017](https://github.com/ACKaraca/arc-suite/blob/main/docs/adr/0017-exchange-connectors-and-licensed-bridges.md).
+A connector is a small add-in that runs inside the user's own licensed copy of the other application,
+uses only its public programming interface and reads or writes the Arc exchange package specified in
+[the interchange architecture](https://github.com/ACKaraca/arc-core/blob/main/docs/architecture/interchange.md).
+Connectors live in a separate repository and are not part of this application.
+
+- **Content:** parts, assemblies, feature trees where the host interface exposes them, sketches,
+  parameters, configurations, drawings and properties, at data fidelity and, where the host allows,
+  edit fidelity.
+- **Identifiers:** the round-trip map keeps host identifiers beside SolidBuilder IDs, so repeated
+  exchanges match the same objects and downstream persistent references are re-resolved and reported
+  when they break.
+- **Licensed bridge:** a user-installed, user-licensed conversion library is called as a separate
+  process; it is never distributed with SolidBuilder and never required for a core workflow.
+- **Open readers:** formats with a published specification or a permissively licensed reader, such as
+  3DM, are read natively behind a format crate.
+- Every exchange produces an import record and a loss report like any other import.
+
+## Electronics exchange
+
+The electronics workspace writes fabrication data itself and exchanges board data with other tools
+through the formats listed above. Writers are verified by re-reading their output with an independent
+reader. ODB++ covers only the content that its published specification defines; the rest is listed in
+the loss report.
+
 ## Deliberately unsupported
 
 | Format family | Reason | Exchange instead |
 |---|---|---|
-| Native files of other CAD systems without published specifications | Not reverse engineered | STEP from the source system, optionally as a linked import |
+| Undocumented formats and protected binaries or scripts of other applications | Reverse engineering and running protected content create a legal problem | A connector, a licensed bridge, an open reader or STEP from the source application |
 | FBX | No published specification | glTF, OpenUSD |
 | Proprietary rendering scene formats | Rendering goes through RenderBuilder | Arc Scene, OpenUSD |
-| Building family formats of BIM tools | Proprietary | IFC 4.3 product export |
+| Building family formats of BIM tools | Owned by ArchBuilder, which has its own connector | IFC 4.3 product export |
 
 Libraries under restrictive or uncertain licenses are used only through byte-level bridges in separate
 processes and are never required for a core workflow.

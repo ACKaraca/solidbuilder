@@ -40,15 +40,19 @@ columns `ID | Capability | Behavior | Tier | Phase`.
 | [18-data-management.md](18-data-management.md) | DATA | Local documents and references, versions, branches and merges, Arc Hub, multi-user editing | 36 |
 | [19-interoperability.md](19-interoperability.md) | IO | Import and export behavior and formats | 36 |
 | [20-routed-systems.md](20-routed-systems.md) | ROUTE | Tube, pipe, hose and cable harness routing | 70 |
-| [21-manufacturing-setup-and-tooling.md](21-manufacturing-setup-and-tooling.md) | MFG | Setups, stock, machines, tools, simulation, post-processing | 72 |
+| [21-manufacturing-setup-and-tooling.md](21-manufacturing-setup-and-tooling.md) | MFG | Setups, stock, machines, tools, simulation, post-processing, shop-floor connection | 80 |
 | [22-milling.md](22-milling.md) | MILL | 2.5-axis, 3-axis and multi-axis milling and drilling | 66 |
 | [23-turning-and-mill-turn.md](23-turning-and-mill-turn.md) | TURN | Turning and mill-turn | 45 |
 | [24-additive-manufacturing.md](24-additive-manufacturing.md) | ADD | Additive build preparation | 44 |
 | [25-nesting-and-fabrication.md](25-nesting-and-fabrication.md) | NEST | Sheet nesting and profile cutting | 45 |
 | [26-simulation.md](26-simulation.md) | SIM | Structural, thermal and other studies through open solvers | 72 |
 | [27-generative-design-and-optimization.md](27-generative-design-and-optimization.md) | GEN | Generative design and topology optimization | 46 |
-| [28-electronics-codesign.md](28-electronics-codesign.md) | ECAD | Board exchange with ECAD tools | 42 |
+| [28-electronics-codesign.md](28-electronics-codesign.md) | ECAD | Board exchange with open ECAD tools, board and component objects, synchronization, fit checks, harness links | 42 |
 | [29-tolerance-and-inspection.md](29-tolerance-and-inspection.md) | TOL | Tolerance stack analysis and inspection | 45 |
+| [30-schematic-capture.md](30-schematic-capture.md) | SCH | Sheets and hierarchy, symbols, nets and buses, annotation, electrical rule checking, variants, netlist, design blocks, cross-probing | 54 |
+| [31-pcb-layout.md](31-pcb-layout.md) | PCB | Board and stack-up, footprints, placement, routing, copper pours, design rules, autorouting, 3D board and enclosure clearance, panelization | 64 |
+| [32-electronics-simulation-and-outputs.md](32-electronics-simulation-and-outputs.md) | EOUT | SPICE simulation, basic signal-integrity checks, manufacturing outputs, library management and supplier data | 51 |
+| [33-application-connectors.md](33-application-connectors.md) | CONNECT | Exchange with native files of other applications through connectors, licensed bridges and open readers | 39 |
 
 ## Capabilities and issues
 
