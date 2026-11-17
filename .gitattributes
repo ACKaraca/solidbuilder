@@ -1,0 +1,18 @@
+* text=auto eol=lf
+
+# Binary interchange and media files are never normalized or diffed as text
+*.dwg binary
+*.dxb binary
+*.ifczip binary
+*.glb binary
+*.usdc binary
+*.usdz binary
+*.las binary
+*.laz binary
+*.e57 binary
+*.exr binary
+*.png binary
+*.jpg binary
+*.pdf binary
+*.ttf binary
+*.otf binary
