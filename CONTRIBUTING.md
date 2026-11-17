@@ -10,6 +10,11 @@ workflow, review process, sign-off and standards, and applies here in full:
 
 ## Working in this repository
 
+> **Current working mode.** Until the project has a second maintainer and this repository has
+> reached its MVP release, changes are committed directly to `main` (suite rule 14): no feature
+> branches and no pull requests. Where this document says "pull request", read "commit". The
+> branch, review and merge rules below apply again when rule 14 is removed.
+
 1. Start from an issue. Search open issues and pull requests first, comment on the issue you intend
    to take, and wait for it to be assigned before starting substantial work.
 2. Read [docs/README.md](docs/README.md) for the documentation map. Capability identifiers used in

@@ -74,6 +74,12 @@ in `arc-suite`; change it there first.
     changing a file format or public protocol, adding a new repository or remote, spending money,
     handling secrets, or any destructive git operation. Otherwise keep working.
 13. **Keep secrets and personal data out** of repositories, logs and requests.
+14. **Commit directly to `main` for now.** Until the project has a second maintainer and this
+    repository has reached its MVP release (for `arc-suite` and `arc-core`: the first product MVP),
+    work on `main`: no feature branches and no pull requests. Wherever these rules or the documents
+    say "pull request", read "commit". Run the checks before every push and name the issue in the
+    commit message. This rule is temporary and is deleted from a repository when that point is
+    reached.
 
 ## Repository-specific invariants
 
