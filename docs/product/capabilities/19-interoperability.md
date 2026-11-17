@@ -40,7 +40,7 @@ checked by an independent reader. The format policy and fidelity table are in
 | SB-IO-015 | Parasolid XT import | Imports B-rep geometry from Parasolid XT text and binary files using the published format reference. | T3 | 5 |
 | SB-IO-016 | JT import | Imports JT (ISO 14306) assembly structure, tessellated geometry and exact geometry where present, at view or data level. | T3 | 5 |
 | SB-IO-017 | ACIS SAT import | Imports B-rep geometry from SAT files where the version is covered by a published description. | T3 | 5 |
-| SB-IO-018 | Rhino 3DM import | Imports NURBS curves, surfaces and polysurfaces through a permissively licensed reader isolated in a bridge process. | T3 | 5 |
+| SB-IO-018 | Rhino 3DM import | Imports NURBS curves, surfaces and polysurfaces natively through a permissively licensed reader behind its own format crate, as specified in [application connectors](33-application-connectors.md). | T3 | 5 |
 
 ## Mesh and scene formats
 
@@ -73,9 +73,9 @@ checked by an independent reader. The format policy and fidelity table are in
 | SB-IO-033 | Point clouds | Attaches E57, LAS and LAZ point clouds as references with crop, alignment to the model and sectioning. | T3 | 4 |
 | SB-IO-034 | URDF export | Exports an assembly as URDF with links from components, joints from joints and inertia from mass properties. | T3 | 5 |
 
-## Unsupported formats
+## Proprietary and unsupported formats
 
 | ID | Capability | Behavior | Tier | Phase |
 |---|---|---|---|---|
-| SB-IO-035 | Proprietary native CAD | Native files of other CAD systems without a published specification are not read or written; the user is directed to STEP export from the source system and to linked import of that STEP file. | T1 | 3 |
+| SB-IO-035 | Proprietary native CAD | Native files of other applications are exchanged through connectors that run inside the user's own licensed copy, through user-licensed bridges and through open readers, as specified in [application connectors](33-application-connectors.md). Reverse engineering of undocumented formats is not provided; STEP and linked import remain the format-level path. | T1 | 3 |
 | SB-IO-036 | FBX | FBX is not read or written; animated and scene exchange uses glTF and OpenUSD. | T1 | 3 |

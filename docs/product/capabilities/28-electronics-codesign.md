@@ -1,6 +1,6 @@
 # Electronics co-design
 
-Electronics co-design connects mechanical assemblies with boards designed in open ECAD tools. It exchanges board outlines, keep-outs, holes and component models, places three-dimensional boards in assemblies, synchronizes changes in both directions through reviewed change sets, checks enclosure clearance and links harness connectors to schematics. SolidBuilder does not edit schematics or route boards.
+Electronics co-design connects mechanical assemblies with boards designed in open ECAD tools. It exchanges board outlines, keep-outs, holes and component models, places three-dimensional boards in assemblies, synchronizes changes in both directions through reviewed change sets, checks enclosure clearance and links harness connectors to schematics. Schematics and boards designed inside SolidBuilder are specified in [schematic capture](30-schematic-capture.md), [PCB layout](31-pcb-layout.md) and [electronics simulation and outputs](32-electronics-simulation-and-outputs.md). This area keeps the exchange with open ECAD tools for teams whose boards are designed elsewhere, and the harness links to schematics.
 
 ## Domain objects
 
@@ -79,7 +79,7 @@ Electronics co-design connects mechanical assemblies with boards designed in ope
 
 | ID | Capability | Behavior | Tier | Phase |
 |---|---|---|---|---|
-| SB-ECAD-037 | Schematic link | Reads connections from a netlist or schematic export in CSV or XML and ties harness connectors to reference designators and pin names. | T2 | 4 |
+| SB-ECAD-037 | Schematic link | Reads connections from a netlist or schematic export in CSV or XML, or from a schematic of the same document ([schematic capture](30-schematic-capture.md)), and ties harness connectors to reference designators and pin names. | T2 | 4 |
 | SB-ECAD-038 | Connector pin mapping | Maps board connector pins to harness connector pins and checks pin counts and keying for compatibility. | T2 | 4 |
 | SB-ECAD-039 | Connection check | Reports connections present in the schematic but not in the harness and the reverse, and unconnected pins. | T2 | 4 |
 | SB-ECAD-040 | Electronic bill of materials merge | Merges board component lines with the mechanical bill of materials by part number. | T2 | 4 |

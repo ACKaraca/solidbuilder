@@ -13,12 +13,13 @@ architecture and decisions are in [arc-suite](https://github.com/ACKaraca/arc-su
 | `solidbuilder-commands` | Domain (headless) | User-level commands with parameter schemas and prompt machines; validation; the text form reader and writer; rules and forms runtime |
 | `solidbuilder-io` | Domain (headless) | Mapping between the domain model and the neutral models of `arc-io-*` crates; import records, loss reports, linked imports |
 | `solidbuilder-cam` | Domain (headless) | Manufacturing setups, toolpath kernels, stock simulation, intermediate toolpath format, post-processor host. Created at the manufacturing milestone ([ADR 0006](../adr/0006-external-solvers-and-owned-toolpath-kernels.md)) |
-| `solidbuilder-sim` | Domain (headless) | Study definitions, idealization, solver adapters writing decks and reading results, result fields. Created at the simulation milestone |
+| `solidbuilder-sim` | Domain (headless) | Study definitions, idealization, solver adapters writing decks and reading results, result fields. Created at the simulation milestone; native solver and meshing kernels join it later ([ADR 0006](../adr/0006-external-solvers-and-owned-toolpath-kernels.md)) |
+| `solidbuilder-ecad` | Domain (headless) | Schematic, board and library objects, connectivity, rule checks, routing, zone fill, circuit study adapters, signal-integrity checks, output writers. Created at the electronics milestone ([ADR 0007](../adr/0007-electronics-workspace-on-the-suite-document-model.md)) |
 | `solidbuilder-ui` | UI | Tools, panels, viewport interaction, property editors, drawing sheet editor (egui) |
 | `apps/solidbuilder` | Application | Desktop application wiring |
 | `apps/solidbuilder-cli` | Application | Headless CLI: convert, validate, regenerate, publish, run scripts, serve the automation protocol |
 
-The two optional crates exist because they have a second consumer (Arc Hub workers) and heavy,
+The three optional crates exist because they have a second consumer (Arc Hub workers) and heavy,
 independent dependencies; everything else stays in the four template crates until a second boundary
 appears.
 
@@ -33,6 +34,7 @@ flowchart TB
     io[solidbuilder-io]
     cam[solidbuilder-cam]
     sim[solidbuilder-sim]
+    ecad[solidbuilder-ecad]
   end
   subgraph core[arc-core]
     l6[L6 arc-app, arc-ui]
@@ -51,9 +53,11 @@ flowchart TB
   cmd --> io
   cmd --> cam
   cmd --> sim
+  cmd --> ecad
   io --> model
   cam --> model
   sim --> model
+  ecad --> model
   ui --> l6
   ui --> l5
   model --> l4
@@ -70,14 +74,14 @@ Everything except `solidbuilder-ui` and `apps/solidbuilder` builds headless.
 | Crate | Used for |
 |---|---|
 | `arc-base` | Stable IDs, quantities and units (metres, radians internally), tolerances, errors |
-| `arc-geom` | Sketch curves, 2D regions for profiles, NURBS for surfacing curves, spatial indexes, toolpath geometry |
+| `arc-geom` | Sketch curves, 2D regions for profiles, copper polygons and offsets for zones and clearance, NURBS for surfacing curves, spatial indexes, toolpath geometry |
 | `arc-mesh` | Mesh bodies, subdivision surfaces for freeform bodies, mesh booleans, simplification, stock models |
 | `arc-brep` | Exact solids and sheets: every modeling operation, persistent naming, sectioning, tessellation, mass properties ([geometry kernel](geometry-kernel.md)) |
 | `arc-solve` | Sketch constraint solving, assembly solving, the expression and parameter engine |
 | `arc-doc` | Object store, transactions, journal, dependency graph and regeneration scheduler, external references, document package |
 | `arc-command` | Command registry, prompt machines, macro recording, automation protocol endpoint, headless runner |
 | `arc-view` | Drawing view projection, hidden-line removal, section cuts |
-| `arc-draft` | Drawing sheets, annotations, dimensions, tables, plot output |
+| `arc-draft` | Drawing sheets, annotations, dimensions, tables, plot output; also the schematic sheets and board drawings of the electronics workspace |
 | `arc-scene` | Appearances and scenes exported to RenderBuilder |
 | `arc-nodes` | Visual rules and node-graph driven features |
 | `arc-io-step`, `arc-io-mesh`, `arc-io-dxf`, `arc-io-dwg`, `arc-io-pdf`, `arc-io-ifc`, `arc-io-usd`, `arc-io-pointcloud` | Format reading and writing ([interoperability](interoperability.md)) |
@@ -138,7 +142,10 @@ demand.
 | Rules and forms | `solidbuilder-commands` | Expression rules evaluated in process; script rules run out of process through the protocol |
 | Manufacturing | `solidbuilder-cam` | Setups, toolpaths, simulation, posting |
 | Simulation | `solidbuilder-sim` | Studies, meshing and solver adapters |
+| Electronics workspace | `solidbuilder-ecad` | Schematic capture, board layout, circuit simulation and outputs on the shared document and drafting engine |
 | Electronics exchange | `solidbuilder-io` | Board outline, component placement and keep-out exchange with ECAD tools |
+| Connector exchange | `solidbuilder-io` | Reads and writes the Arc exchange package produced by connectors; round-trip map and change sets |
+| Shop-floor connection | `solidbuilder-cam` | Program transfer and machine status over open protocols, behind explicit commands |
 
 ## Threading and background work
 
@@ -194,4 +201,6 @@ they are design goals, not measured results.
 | Merge tests | Branch pairs with known automatic merges and known conflicts |
 | Performance tests | Budgets above, run on the reference configuration; regressions fail CI |
 | Fuzzing | Importers, text form reader and protocol messages |
+| Electronics checks | Rule check corpora for schematics and boards with known findings; output writers re-read by an independent reader; zone fill determinism on one and many threads |
+| Connector exchange tests | Packages with known content and expected loss reports; repeated exchange tests that check identifier matching |
 | Kernel regression corpus | The SolidBuilder corpus that any `arc-brep` implementation must pass ([geometry kernel](geometry-kernel.md)) |

@@ -12,6 +12,8 @@ of individual capabilities is tracked in GitHub issues, not here.
 | M3 Product breadth | 4 | Surfacing, freeform, sheet metal, plastic, frames, libraries, MBD, rendering, routing, ECAD exchange, rules |
 | M4 Manufacturing preparation | 5 | Milling, turning, additive, nesting, post-processing |
 | M5 Analysis, optimization and multi-user | 5 | Simulation, generative design, tolerance analysis, element-level multi-user editing, assistant |
+| M6 Electronics design workspace | 5 | Schematic capture, PCB layout, circuit simulation, manufacturing outputs, electronics libraries |
+| M7 Application connectors | 5 | Exchange with native files of other applications, licensed bridges, open readers |
 
 ## M0 Kernel readiness
 
@@ -86,7 +88,9 @@ of individual capabilities is tracked in GitHub issues, not here.
   [milling](product/capabilities/22-milling.md),
   [turning and mill-turn](product/capabilities/23-turning-and-mill-turn.md),
   [additive manufacturing](product/capabilities/24-additive-manufacturing.md) (phase-5 rows) and
-  [nesting and fabrication](product/capabilities/25-nesting-and-fabrication.md); SB-SHEET-037.
+  [nesting and fabrication](product/capabilities/25-nesting-and-fabrication.md); SB-SHEET-037. The
+  shop-floor connection rows SB-MFG-073–080 (program transfer and machine status through MTConnect and
+  OPC UA) are part of this milestone.
 - **Dependencies on arc-core:** `arc-mesh` stock models and booleans at toolpath scale; `arc-geom`
   offsetting robustness.
 - **Dependencies on other products:** Arc Hub automation jobs for headless toolpath and post runs.
@@ -111,3 +115,41 @@ of individual capabilities is tracked in GitHub issues, not here.
   without losing work on conflict; a static study of a W1 part reruns after a parameter change and
   reports updated results; the assistant applies a previewed parameter change as one undoable
   transaction.
+
+## M6 Electronics design workspace
+
+- **Goal:** a board is designed, simulated and released inside the document that holds its enclosure.
+- **Scope:** all rows of [schematic capture](product/capabilities/30-schematic-capture.md),
+  [PCB layout](product/capabilities/31-pcb-layout.md) and
+  [electronics simulation and outputs](product/capabilities/32-electronics-simulation-and-outputs.md);
+  [electronics co-design](product/capabilities/28-electronics-codesign.md) remains in M3 and SB-ECAD-036
+  in M5. The crate `solidbuilder-ecad` is created at this milestone
+  ([ADR 0007](adr/0007-electronics-workspace-on-the-suite-document-model.md)).
+- **Dependencies on arc-core:** `arc-draft` for sheets and drawings, `arc-geom` polygon operations at
+  copper scale, `arc-brep` for the board solid, `arc-doc` merge support for the new object kinds.
+- **Dependencies on other products:** Arc Hub for hosted libraries and release jobs.
+- **Exit criteria:** workflow W15 passes; the written Gerber, drill and IPC-2581 files re-read with an
+  independent reader and match the board; zone fill gives identical results on one and many threads.
+
+## M7 Application connectors
+
+- **Goal:** native mechanical CAD files of other applications are exchanged with data fidelity and,
+  where the host interface allows, edit fidelity, with identifiers that survive repeated exchange.
+- **Scope:** all rows of [application connectors](product/capabilities/33-application-connectors.md);
+  the connectors themselves live in a separate repository
+  ([suite ADR-0017](https://github.com/ACKaraca/arc-suite/blob/main/docs/adr/0017-exchange-connectors-and-licensed-bridges.md)).
+- **Dependencies on arc-core:** the Arc exchange package specification and `arc-io-*` format crates.
+- **Dependencies on other products:** none; connectors run in the user's own copy of the other
+  application.
+- **Exit criteria:** an assembly exchanged through a connector, edited in SolidBuilder and pushed back,
+  then edited in the host and pulled again, keeps the same identifiers for unchanged objects, lists
+  changed and broken references, and reports losses; a 3DM file opens through the open reader with a
+  loss report.
+
+## Native kernels
+
+Native finite-element, meshing, slicing and multi-axis toolpath kernels replace wrapped external
+engines once each passes the same validation suites as the engine it replaces
+([ADR 0006](adr/0006-external-solvers-and-owned-toolpath-kernels.md)). The wrapped engines are the
+default in M4 and M5; a native kernel is released per function, with the adapter interface and the
+user-visible capabilities unchanged. This adds no capability rows.

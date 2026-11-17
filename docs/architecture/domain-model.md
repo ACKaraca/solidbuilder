@@ -83,6 +83,21 @@ ID and a schema version, changed only by commands inside transactions.
 | Table | ID, kind, data source, columns | |
 | 3D annotation | ID, kind, annotation plane, semantic values, targets | Model-based definition |
 
+### Electronics
+
+The electronics objects live in the same document as the mechanical objects, are changed only by
+commands in transactions and use the drafting engine for sheets and drawings. The object tables are
+in [schematic capture](../product/capabilities/30-schematic-capture.md),
+[PCB layout](../product/capabilities/31-pcb-layout.md) and
+[electronics simulation and outputs](../product/capabilities/32-electronics-simulation-and-outputs.md).
+
+| Object | Key properties | Notes |
+|---|---|---|
+| Schematic, sheet, symbol instance, net, bus, variant, design block | Sheet set, designators, pins, net classes, fitted state | Netlist, bill of materials and rule findings are derived |
+| Board, stack-up, footprint instance, track, via, zone, rule set, panel | Outline linked to the mechanical model, layers, copper, rules | Filled zones, ratsnest and rule findings are derived |
+| Circuit study, waveform set, signal-integrity check | Netlist revision, engine, results | Results are derived assets |
+| Output job, output set, library part, supplier record | Board revision, variant, formats, part fields | Output files are derived and carry their revision |
+
 ### Data management, automation and downstream objects
 
 | Object | Key properties | Notes |
@@ -93,7 +108,9 @@ ID and a schema version, changed only by commands inside transactions.
 | Manufacturing setup, operation, tool, machine definition, toolpath, NC program | Stock, coordinate system, strategies, cached toolpaths | `solidbuilder-cam`; toolpaths are derived |
 | Study, load case, load, restraint, contact, mesh settings, result set | Idealization, solver, results file assets | `solidbuilder-sim`; results are derived assets |
 | Design space, outcome | Preserve and obstacle geometry, criteria, generated bodies | Generative design |
-| Board link | Board outline, component placements, keep-outs, source file asset | Electronics exchange |
+| Board link | Board outline, component placements, keep-outs, source file asset | Exchange with open ECAD tools |
+| Connector exchange | Exchange package asset, round-trip map, session record, loss report | Native files of other applications ([application connectors](../product/capabilities/33-application-connectors.md)) |
+| Machine connection | Protocol, endpoint, security mode, credential reference, node map | Belongs to a machine definition; read-only status and explicit program transfer |
 | Tolerance stack | Contributing dimensions, method, results | Tolerance analysis |
 
 ## Relationships
@@ -135,6 +152,13 @@ flowchart LR
   BOM --> T[Drawing tables]
   B --> M[Toolpaths, studies, flat patterns]
   A --> M
+  SC[Schematic] --> N[Netlist]
+  N --> PB[Board layout]
+  B --> PB
+  PB --> BM[Board solid in assembly]
+  BM --> O
+  PB --> OUT[Fabrication outputs]
+  N --> SP[Circuit studies]
 ```
 
 ## Invariants
@@ -156,6 +180,13 @@ flowchart LR
 9. A released item (Hub lifecycle) is read-only in the document; edits require a new revision.
 10. Results applied to the model or views carry the current revision; stale results are discarded.
 11. A merge commit never drops either side's value of a conflicting property without a recorded choice.
+12. The netlist is derived from the schematic and tagged with its revision; the board changes its
+    connectivity only through an accepted change set from the schematic or an accepted board link
+    proposal, and a stale netlist is never used.
+13. Manufacturing outputs of a board carry the board revision and variant they were written from; an
+    output older than the board is marked out of date and cannot be released.
+14. A connector exchange changes the document only through a reviewed change set, and an unmatched
+    host identifier is reported, never matched silently.
 
 ## Identity rules
 
@@ -181,6 +212,10 @@ flowchart LR
 | Joint or constraint | Its assembly cluster solve |
 | Property value | BOM rows, drawing fields and tables that show it |
 | Material | Mass properties, appearance if linked, studies |
+| Schematic | Netlist, rule findings, bill of materials, circuit studies; a change set is offered to the board |
+| Board (outline, footprints, tracks, zones, rules) | Rule findings, zone fills, 3D board and enclosure clearance, signal-integrity checks; outputs are marked out of date |
+| Enclosure body near a board | Clearance checks of the board and its components |
+| Connector exchange package | A change set against the last exchanged state; downstream persistent references are re-resolved |
 | Drawing view definition | That view's projection, its annotations' placement and dependent child views |
 | Model geometry used by a manufacturing setup | Toolpaths of affected operations are marked out of date and regenerate on request or automatically per setup policy |
 | Model geometry used by a study | Results are marked out of date; meshing and solving rerun on request |

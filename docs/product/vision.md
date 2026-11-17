@@ -27,9 +27,9 @@ collaboration server with the other Arc applications.
 | Machinists and CNC programmers | Toolpaths, NC programs, setup sheets |
 | Additive manufacturing users | Print-ready parts, build layouts, supports |
 | Analysis engineers | Simulation studies, reports, optimized shapes |
-| Electronics hardware teams | Enclosures designed around boards, board outlines exchanged with ECAD tools |
+| Electronics hardware teams | Schematics, boards and manufacturing outputs designed together with the enclosure; board outlines exchanged with open ECAD tools |
 | Design automation engineers | Configurable products, rules, scripts, batch pipelines, code-first part libraries |
-| Suppliers and contract manufacturers | Imported customer models edited directly, simplified exports |
+| Suppliers and contract manufacturers | Imported customer models edited directly, simplified exports, models exchanged with other applications through connectors |
 
 ## Product principles
 
@@ -49,8 +49,9 @@ collaboration server with the other Arc applications.
    documents, decided per project and changeable later.
 7. **Fast by construction.** Regeneration, assembly solving, view projection and toolpath generation
    run in parallel and in the background; a stale result is never shown as current.
-8. **Open exchange.** STEP is the primary exchange format; every import keeps its source and reports
-   losses.
+8. **Open exchange.** STEP is the primary exchange format; native files of other applications are
+   exchanged through connectors, licensed bridges and open readers. Every import keeps its source and
+   reports losses.
 
 ## Scope
 
@@ -61,22 +62,22 @@ direct editing; sheet metal; plastic parts and molds; assemblies; parameters, co
 states; properties and bills of materials; drawings; model-based definition; frames and weldments;
 standard parts and component generators; automation; visualization and animation; data management;
 interoperability; routed systems; manufacturing setup, milling, turning, additive manufacturing,
-nesting and fabrication; simulation; generative design and optimization; electronics co-design; and
-tolerance analysis and inspection.
+nesting and fabrication; simulation; generative design and optimization; electronics design (schematic
+capture, PCB layout, circuit simulation and manufacturing outputs) and electronics co-design;
+tolerance analysis and inspection; and application connectors for native mechanical CAD files.
 
 ## Non-goals
 
 | Non-goal | Reason |
 |---|---|
 | Photoreal path tracing inside SolidBuilder | Rendering is provided by RenderBuilder through the Arc Scene contract; one renderer is maintained for the suite. |
-| Schematic capture and PCB layout | Electronics design stays in dedicated open ECAD tools; SolidBuilder exchanges board outlines, components and keep-outs with them. |
-| Reading or writing proprietary native CAD files without published specifications | They are exchanged through STEP; formats are never reverse engineered. |
+| Reverse engineering undocumented file formats, and running compiled or protected scripts of other applications | These create a legal problem. Native files of other applications are exchanged through connectors inside the user's own licensed copy, user-licensed bridges and open readers. |
 | Building authoring (walls, floors, storeys) and factory floor layout | Building and plant layout belong to ArchBuilder and DraftBuilder; SolidBuilder exports products as IFC elements for them. |
 | Architectural and 2D-only drafting outside model drawings | DraftBuilder is the suite's general drafting product; SolidBuilder drawings use the same drafting engine. |
 | Polygon modeling for film and games, sculpting, rigging and character animation | These belong to MeshBuilder; SolidBuilder keeps mesh tools needed for engineering (repair, conversion, comparison). |
 | Hosted cloud solving, rendering or assistant services | The open-source product runs solvers and renderers locally or on a self-hosted Arc Hub; assistant providers are configured by the user. |
 | Supplier ordering and vendor catalog services | The standard parts library imports supplier data from STEP and property sheets; it does not integrate commercial ordering services. |
-| Shop-floor machine monitoring | Manufacturing preparation ends at validated NC programs and setup sheets. |
+| Production scheduling, shop-floor analytics and machine control | SolidBuilder sends NC programs and reads machine status through open protocols; production tracking belongs to Arc Hub, and no connection starts or stops a machine. |
 
 ## Positioning
 
@@ -84,7 +85,7 @@ SolidBuilder covers the professional scope of parametric mechanical design and m
 preparation addressed by tools such as Autodesk Inventor, Dassault Systèmes SolidWorks and
 CATIA, Siemens NX and Solid Edge, PTC Creo and Onshape, and open-source projects such as FreeCAD:
 part and assembly modeling, drawings, sheet metal and fabrication, manufacturing preparation and
-simulation, delivered as an open-source, local-first application.
+simulation, together with the electronics design of the boards inside the product, delivered as an open-source, local-first application.
 
 ## Differentiators
 
@@ -101,6 +102,8 @@ simulation, delivered as an open-source, local-first application.
 | Semantic model-based definition with validation and STEP AP242 exchange | [Model-based definition](capabilities/13-model-based-definition.md) |
 | Open solver integration and toolpath kernels with a documented post-processor format | [Simulation](capabilities/26-simulation.md), [manufacturing setup](capabilities/21-manufacturing-setup-and-tooling.md) |
 | Headless model checking and drawing publishing in CI | [Automation](capabilities/16-automation-and-api.md), [drawings](capabilities/12-drawings.md) |
+| Electronics design in the same document and command model as the mechanical design, with real-time enclosure clearance | [Schematic capture](capabilities/30-schematic-capture.md), [PCB layout](capabilities/31-pcb-layout.md) |
+| Connectors for native files of other applications with identifiers that survive repeated round trips | [Application connectors](capabilities/33-application-connectors.md) |
 | One executable with identical features on Windows, macOS and Linux | [Architecture overview](../architecture/overview.md) |
 | Loss-reported imports that keep the source file | [Interoperability](capabilities/19-interoperability.md) |
 | Calculating component generators whose inputs stay editable | [Standard parts and generators](capabilities/15-standard-parts-and-generators.md) |

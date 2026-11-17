@@ -14,7 +14,8 @@ This area defines how a design becomes a machining program: manufacturing models
 | Tool | Type, geometry, flutes, material, tool number, offsets, cutting data presets | Stored in a tool library; referenced by operations |
 | Holder | Revolved profile or body, gauge length, collet or extension | Combined with a tool into a tool assembly |
 | Tool library | Ordered tools and holders, schema version, scope | Local, shared or embedded in a document |
-| Machine definition | Type, axes, travel limits, spindle limits, kinematic chain, controller profile | Referenced by setups and by post processors |
+| Machine definition | Type, axes, travel limits, spindle limits, kinematic chain, controller profile, optional connection | Referenced by setups and by post processors |
+| Machine connection | Protocol, endpoint, security mode, credential reference, node map | Belongs to a machine definition; carries program transfer and read-only status |
 | Operation | Strategy, tool, geometry selection, parameters, state | Owned by a setup; produces a toolpath |
 | Operation template | Operation list with parameters and tool rules | Applied to setups or recognized features |
 | Toolpath | Moves, feeds, tool orientation, source revision | Derived from an operation; consumed by simulation and posting |
@@ -147,9 +148,22 @@ This area defines how a design becomes a machining program: manufacturing models
 | SB-MFG-064 | NC program | Collects operations or setups in order and assigns a post, an output folder, file naming, program number and sub-program rules. A program can produce one file per setup, tool or operation. | T1 | 5 |
 | SB-MFG-065 | Post processing run | Produces NC files deterministically from the toolpaths and the post and reports unsupported items. The same run is available through the command line without a dialog. | T1 | 5 |
 | SB-MFG-066 | NC code viewer | Shows the generated code with syntax highlighting and links each line to its toolpath move in both directions. | T2 | 5 |
-| SB-MFG-067 | Program transfer | Sends output to a machine through documented transfer plug-ins. No transfer happens without an explicit command. | T3 | 5 |
+| SB-MFG-067 | Program transfer | Sends output to a machine through documented transfer plug-ins; open-protocol transfer is specified in the shop-floor connection rows below. No transfer happens without an explicit command. | T3 | 5 |
 | SB-MFG-068 | Setup sheet | Renders a setup sheet from a template with setup views, stock, work offsets, operation list, tools, holders, stick-out, estimated times and notes, as HTML or PDF. | T1 | 5 |
 | SB-MFG-069 | Setup sheet templates | Provides sheet templates that read document properties and fields, in a documented template format. | T2 | 5 |
 | SB-MFG-070 | Tool and operation lists | Exports tool lists with assembly lengths for presetting and operation lists as CSV. | T2 | 5 |
 | SB-MFG-071 | Manufacturing notes | Attaches text and images to setups and operations and includes them in setup sheets. | T3 | 5 |
 | SB-MFG-072 | Headless manufacturing run | Regenerates all toolpaths and produces NC files and setup sheets for a document from the command line or an Arc Hub job. | T2 | 5 |
+
+## Shop-floor connection
+
+| ID | Capability | Behavior | Tier | Phase |
+|---|---|---|---|---|
+| SB-MFG-073 | Machine connection | Records the network endpoint, protocol (MTConnect or OPC UA), security mode and credential reference of a machine on its machine definition. Credentials are held in the operating system's secret store, never in the document. | T3 | 5 |
+| SB-MFG-074 | Program transfer over OPC UA | Sends an NC program to a machine that exposes file transfer through OPC UA, after an explicit command that names the program, the machine and the target. Transfers use an encrypted, authenticated session. | T3 | 5 |
+| SB-MFG-075 | Transfer verification | Compares a checksum of the transferred program with the posted file and records the result, the time and the user in the NC program history. A failed transfer leaves the program marked as not delivered. | T3 | 5 |
+| SB-MFG-076 | Machine status through MTConnect | Reads execution state, controller mode, active program, part count and alarms from an MTConnect agent and shows them in a machine panel. | T3 | 5 |
+| SB-MFG-077 | Machine status through OPC UA | Subscribes to the same status items through OPC UA nodes mapped by a documented node map, with reconnect handling. | T3 | 5 |
+| SB-MFG-078 | Read-only status | Status connections never start, stop or change a machine. Only the explicit transfer command writes to a machine. | T3 | 5 |
+| SB-MFG-079 | Cycle data feedback | Stores observed cycle times of a program from machine status and offers them as input to the correction factor of the cycle time estimate (SB-MFG-052). | T3 | 5 |
+| SB-MFG-080 | Headless transfer and status | Runs transfers and status queries from the command-line runner and as Arc Hub jobs with the same explicit-command rule and a machine-readable result. | T3 | 5 |
