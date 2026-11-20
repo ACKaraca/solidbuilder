@@ -52,6 +52,7 @@ automation engineers who build configurable products and code-first part librari
 | PCB layout | Stack-up, placement, routing, pours, design rules, 3D board | [31](docs/product/capabilities/31-pcb-layout.md) |
 | Electronics simulation and outputs | SPICE, signal-integrity checks, manufacturing outputs, libraries | [32](docs/product/capabilities/32-electronics-simulation-and-outputs.md) |
 | Application connectors | Native files of other applications through connectors | [33](docs/product/capabilities/33-application-connectors.md) |
+| Assistance | Optional assistance checked by the solver, rebuild, analysis and simulation engines | [34](docs/product/capabilities/34-assistance.md) |
 
 ## How it fits in the suite
 

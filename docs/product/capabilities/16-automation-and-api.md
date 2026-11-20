@@ -80,6 +80,6 @@ modeling with a stable API and a diffable text form.
 
 | ID | Capability | Behavior | Tier | Phase |
 |---|---|---|---|---|
-| SB-AUTO-034 | Provider-neutral assistant | An optional assistant panel connects to a user-configured model endpoint, including local models; no document content leaves the machine without an explicit user action. | T3 | 5 |
-| SB-AUTO-035 | Preview and apply | Assistant proposals are shown as a list of commands with a model preview and are applied only on explicit confirmation, as one undoable transaction. | T3 | 5 |
+| SB-AUTO-034 | Provider-neutral assistant | An optional assistant panel connects to a user-configured model endpoint, including local models; no document content leaves the machine without an explicit user action. The assistance capabilities are in [34-assistance.md](34-assistance.md). | T3 | 4 |
+| SB-AUTO-035 | Preview and apply | Assistant proposals are shown as a list of commands with a model preview and are applied only on explicit confirmation, as one undoable transaction. | T3 | 4 |
 | SB-AUTO-036 | Assistant tasks | The assistant can create and run scripts and rules after the static check, manage configurations and states, bulk-edit properties, and assemble drawing packages. | T3 | 5 |

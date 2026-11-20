@@ -67,13 +67,16 @@ of individual capabilities is tracked in GitHub issues, not here.
 - **Scope:** phase-4 rows of SB-SURF, SB-FORM, SB-DIRECT, SB-SHEET-001–041, SB-MOLD-001–025,
   SB-FRAME-001–028, SB-LIB-001–030, SB-MBD-001–019, SB-VIS-007–026, SB-PARAM (rules, families,
   generated members), SB-BOM (cost, comparison), SB-DRAW (overlay, flat pattern, weld tables,
-  automatic layout), SB-AUTO-010, SB-AUTO-017, SB-AUTO-019–033, SB-DATA-015–019, SB-DATA-025–030,
+  automatic layout), SB-AUTO-010, SB-AUTO-017, SB-AUTO-019–035, SB-ASSIST-001–016, SB-ASSIST-024
+  (assistance rows never gate the milestone: each is offered when its task suite passes),
+  SB-DATA-015–019, SB-DATA-025–030,
   SB-DATA-032, SB-IO-012, SB-IO-014, SB-IO-023–024, SB-IO-029, SB-IO-031–033; phase-4 rows of
   [routed systems](product/capabilities/20-routed-systems.md),
   [electronics co-design](product/capabilities/28-electronics-codesign.md),
   [tolerance and inspection](product/capabilities/29-tolerance-and-inspection.md) and
   [additive manufacturing](product/capabilities/24-additive-manufacturing.md).
-- **Dependencies on arc-core:** `arc-mesh` subdivision surfaces, `arc-brep` sheet metal unbend and
+- **Dependencies on arc-core:** the suite assistant host in `arc-app` for the assistance rows;
+  `arc-mesh` subdivision surfaces, `arc-brep` sheet metal unbend and
   surface continuity, `arc-nodes`, `arc-scene`, `arc-io-usd`, `arc-io-ifc`, `arc-io-pointcloud`.
 - **Dependencies on other products:** RenderBuilder (suite phase 4) for SB-VIS-013–014; Arc Hub
   automation jobs for SB-AUTO-017.
@@ -105,7 +108,7 @@ of individual capabilities is tracked in GitHub issues, not here.
 - **Scope:** all rows of [simulation](product/capabilities/26-simulation.md),
   [generative design and optimization](product/capabilities/27-generative-design-and-optimization.md),
   phase-5 rows of [tolerance and inspection](product/capabilities/29-tolerance-and-inspection.md);
-  SB-DATA-033–035, SB-AUTO-034–036, SB-FRAME-024, SB-FRAME-028, SB-MBD-018, SB-IO-015–018, SB-IO-034,
+  SB-DATA-033–035, SB-AUTO-036, SB-ASSIST-017–023, SB-FRAME-024, SB-FRAME-028, SB-MBD-018, SB-IO-015–018, SB-IO-034,
   remaining phase-5 rows of every area file.
 - **Dependencies on arc-core:** `arc-doc` change-set exchange; `arc-hub-api` editing sessions.
 - **Dependencies on other products:** Arc Hub element-level editing sessions (suite phase 5); open

@@ -53,6 +53,7 @@ columns `ID | Capability | Behavior | Tier | Phase`.
 | [31-pcb-layout.md](31-pcb-layout.md) | PCB | Board and stack-up, footprints, placement, routing, copper pours, design rules, autorouting, 3D board and enclosure clearance, panelization | 64 |
 | [32-electronics-simulation-and-outputs.md](32-electronics-simulation-and-outputs.md) | EOUT | SPICE simulation, basic signal-integrity checks, manufacturing outputs, library management and supplier data | 51 |
 | [33-application-connectors.md](33-application-connectors.md) | CONNECT | Exchange with native files of other applications through connectors, licensed bridges and open readers | 39 |
+| [34-assistance.md](34-assistance.md) | ASSIST | Optional assistance: model questions, sketch and reference repair, parts and variants from descriptions, feature recognition, manufacturability, fits and stack-ups, drawings and BOM, toolpaths, simulation and board checks | 24 |
 
 ## Capabilities and issues
 
